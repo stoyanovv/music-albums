@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: head"></head>
+<body>
+<header>
+    <nav th:replace="~{fragments/fragment :: navigation}"></nav>
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+    <h2 class="text-light border-bottom" th:object="${copies}" th:text="|Total sold copies
+        of all albums:${copies}|">Total sold copies
+        of all albums: 10000</h2>
+    <div class="row">
+        <div th:each="a : ${albums}" th:object="${a}" class="col-md-3">
+            <div  class="card mb-4 box-shadow">
+                <img th:src="|/img/*{imageUrl}.jpg|" class="card-img-top" alt="Thumbnail [100%x225]"
+                     data-holder-rendered="true"
+                     style="height: 225px; width: 100%; display: block;">
+                <div class="card-body">
+                    <div class="text-center">
+                        <p class="card-text border-bottom " th:text="|Name: *{name}|">Name: Name of album</p>
+                        <p class="card-text border-bottom " th:text="|Artist: *{artist.getSingerName()}|">Artist: Metallica</p>
+                        <p class="card-text border-bottom " th:text="|Genre: *{genre}|">Genre: Metal</p>
+                        <p class="card-text border-bottom " th:text="|Price: *{price}|">Price: 19.99</p>
+                        <p class="card-text border-bottom" th:text="|Release Date: *{releasedDate}|">Release Date: </p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a th:href="@{/albums/delete/{id}(id = *{id})}" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
+                        </div>
+                        <small th:text="|*{copies} copies|" class="text-muted">1000 copies</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/fragment :: footer"></footer>
+</body>
+</html>
