@@ -45,7 +45,7 @@ public class AlbumController {
 
     @PostMapping("/add")
     public String addConfirm(@Valid AlbumAddBindingModel albumAddBindingModel, BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                             HttpSession httpSession) {
+                              HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("albumAddBindingModel", albumAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.albumAddBindingModel", bindingResult);
@@ -58,11 +58,9 @@ public class AlbumController {
             return "redirect:add";
         }
         redirectAttributes.addFlashAttribute("user",  httpSession.getAttribute("user"));
-        Object object = httpSession.getAttribute("user");
-        UserServiceLoginModel userServiceLoginModel = modelMapper.map(object, UserServiceLoginModel.class);
+        UserServiceLoginModel userServiceLoginModel = modelMapper.map(httpSession.getAttribute("user"), UserServiceLoginModel.class);
         albumAddBindingModel.setAddedFrom(userService.findById(userServiceLoginModel.getId()));
         albumService.addAlbum(modelMapper.map(albumAddBindingModel, AlbumServiceModel.class));
-        System.out.println();
         return "redirect:/";
     }
 
